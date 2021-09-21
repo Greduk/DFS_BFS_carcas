@@ -1,0 +1,23 @@
+// Graph
+digraph {
+	0
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	0 -> 1 [arrowhead=none]
+	0 -> 2 [arrowhead=none]
+	0 -> 3 [arrowhead=none]
+	0 -> 4 [arrowhead=none]
+	0 -> 5 [arrowhead=none]
+	1 -> 2 [arrowhead=none]
+	1 -> 4 [arrowhead=none]
+	2 -> 7 [arrowhead=none]
+	3 -> 4 [arrowhead=none]
+	4 -> 6 [arrowhead=none]
+	5 -> 6 [arrowhead=none]
+	6 -> 7 [arrowhead=none]
+}
