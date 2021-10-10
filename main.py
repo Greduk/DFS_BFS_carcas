@@ -1,6 +1,7 @@
 import graphviz
 import sets
 import os
+import copy
 os.environ["PATH"] += os.pathsep + 'C:\\Program Files\\Graphviz\\bin\\'
 
 checked_nodes = {0: 0}
@@ -8,6 +9,17 @@ stack = [0]
 f = open('input.txt', 'r')
 n = [[int(j) for j in list(filter(None, i.split(' ')))] for i in list(filter(None, f.read().split('\n')))]
 f.close()
+
+q = sets.adjacency_to_set(n)
+
+q = [list(i) for i in q]
+dot = graphviz.Digraph(comment='Graph', strict=True)
+for i in range(len(q)):
+	dot.node(str(i))
+for i in range(len(q)):
+	for j in range(len(q[i])):
+		if q[i][j] > i:
+			dot.edge(str(i), str(q[i][j]), arrowhead='none')
 
 f = open('output_BFS.txt', 'w')
 while len(stack) > 0:
@@ -20,13 +32,11 @@ while len(stack) > 0:
 			stack.append(i)
 			checked_nodes[i] = tmp
 
-dot1 = graphviz.Digraph(comment='Carcas')
-for i in range(len(n)):
-	dot1.node(str(i))
+dot1 = copy.deepcopy(dot)
 for i in range(len(n)):
 	if i == 0:
 		continue
-	dot1.edge(str(i), str(checked_nodes[i]), arrowhead='none')
+	dot1.edge(str(i), str(checked_nodes[i]), arrowhead='none', color='red')
 
 dot1.render('karkas_bfs.gv', view=True)
 
@@ -60,27 +70,12 @@ for i in range(1, len(n)):
 
 f.close()
 
-q = sets.adjacency_to_set(n)
-
-q = [list(i) for i in q]
-dot = graphviz.Digraph(comment='Graph')
-for i in range(len(q)):
-	dot.node(str(i))
-for i in range(len(q)):
-	for j in range(len(q[i])):
-		if q[i][j] > i:
-			dot.edge(str(i), str(q[i][j]), arrowhead='none')
-
-dot.render('graph.gv', view=False)
-
-dot1 = graphviz.Digraph(comment='Carcas')
-for i in range(len(n)):
-	dot1.node(str(i))
+dot2 = dot
 for i in range(len(n)):
 	if i == 0:
 		continue
-	dot1.edge(str(i), str(checked_nodes[i]), arrowhead='none')
+	dot2.edge(str(i), str(checked_nodes[i]), arrowhead='none', color='blue')
 
-dot1.render('karkas.gv', view=True)
+dot2.render('karkas_dfs.gv', view=True)
 
 print('Graph converted successfully.')
